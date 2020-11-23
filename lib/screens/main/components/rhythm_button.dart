@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:chords_jam/constants.dart';
+import 'package:provider/provider.dart';
+import 'package:chords_jam/logic/jam.dart';
 
 class RhythmButton extends StatelessWidget {
   final String buttonText;
-  bool isActive = false;
-  RhythmButton(this.buttonText, this.isActive);
+  final int id;
+  bool isActive;
+  RhythmButton(this.id, this.buttonText, this.isActive);
 
   @override
   Widget build(BuildContext context) {
-    return OutlineButton(
-      highlightColor: Colors.white.withOpacity(0.3),
-      highlightedBorderColor: Colors.white,
-      borderSide: BorderSide(color: Colors.white.withOpacity(0.3)),
-      onPressed: () {},
+    return FlatButton(
+      color: isActive ? Colors.white.withOpacity(0.3) : Colors.transparent,
+      //disabledBorderColor: Colors.red,
+      focusColor: Colors.red,
+      // borderSide: BorderSide(color: Colors.white.withOpacity(0.3)),
+      onPressed: () {
+        context.read<Jam>().setRhythm(id);
+      },
       child: Text(
         buttonText,
         style: kMediumText,

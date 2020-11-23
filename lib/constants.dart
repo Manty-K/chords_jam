@@ -33,3 +33,7 @@ const BoxDecoration kBackGroundGradient = BoxDecoration(
     tileMode: TileMode.clamp,
   ),
 );
+
+const kMInTempo = 60;
+
+const kMaxTempo = 300;

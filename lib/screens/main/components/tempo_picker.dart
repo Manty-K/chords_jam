@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chords_jam/constants.dart';
+import 'package:provider/provider.dart';
+import 'package:chords_jam/logic/jam.dart';
 
 class TempoPicker extends StatefulWidget {
   @override
@@ -13,7 +15,7 @@ class _TempoPickerState extends State<TempoPicker> {
   @override
   void initState() {
     super.initState();
-    for (int i = 60; i < 300; i++) {
+    for (int i = kMInTempo; i < kMaxTempo; i++) {
       tempoList.add(i);
     }
   }
@@ -32,9 +34,14 @@ class _TempoPickerState extends State<TempoPicker> {
         Container(
           height: 50,
           child: CupertinoPicker(
+              scrollController: FixedExtentScrollController(
+                  initialItem: context.watch<Jam>().tempo - kMInTempo),
               looping: true,
               itemExtent: 80,
-              onSelectedItemChanged: null,
+              onSelectedItemChanged: (val) {
+                int currentTempo = val + kMInTempo;
+                context.read<Jam>().setTempo(currentTempo);
+              },
               children: tempoList
                   .map((tempo) => Center(
                           child: Text(
